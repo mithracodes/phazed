@@ -155,6 +155,36 @@ An example call to the function is:
 (5, '5D')
 ```
 
-#### Question 6
+### Question 6
+
+The function `phazed_bonus` implements a player for the bonus version of the game. It takes the following arguments:
+
+- `player_id`: An integer between 0 and 3 inclusive, indicating the ID of the player attempting to play.
+* `table`: A 4-element list of phase plays for each of Players 0—3, respectively. Each phase play is in the form of a 2-tuple indicating the phase type (as an integer or `None`, consistent with the output of `phazed_phase_type`) and a list of lists of cards (of the same format as for `phazed_phase_type`, but possibly with extra cards played to each of the groups in the phase). An empty phase for a given player will take the form `(None, [])`.
++ `turn_history`: A list of all turns in the hand to date, in sequence of play. Each turn takes the form of a 2-tuple made up of the Player ID and the list of individual plays in the turn (based on the same format as for play above, with the one difference that for any draws from the deck, the card is indicated as `XX` (as it is not visible to other players).
+- `phase_status`: A 4-element list indicating the phases that each of Players 0—3, respectively, have achieved in the hand to date, in the form of a 7-tuple of Booleans. At the start of a game, this is initialized to `[(False, False, False, False, False, False, False), (False, False, False, False, False, False, False), (False, False, False, False, False, False, False), (False, False, False, False, False, False, False)]`.
+* `hand`: The list of cards that the current player holds in their hand, each of which is in the form of a 2-element string.
++ `discard`: The top card of the discard stack, in the form of a 2-element string (e.g. `3D`).
+
+The function returns a *2-tuple* describing the single play your player wishes to make, made up of a *play ID* and associated *play content*, as described below:
+
+1. Pick up a card from the top of the deck at the start of the player's turn. In this case, the card at the top of the deck is unknown at the time the play is determined, so the play content is set to `None` (i.e. `(1, None)`).
+
+2. Pick up a card from the top of the discard pile at the start of the player's turn, with the play content taking the value of discard (e.g. `(2, '2C')`).
+
+3. Place a phase to the table from the player's hand, with the play type being a 2-tuple comprising the phase ID and phase group(s) (e.g. `(3, (1, [['2S', '2S', '2C'], ['AS', '5S', '5S']]))`).
+
+4. Place a single card from the player's hand to a phase on the table, with the play type being a 2-tuple made up of the card the player is attempting to play, and the position they are attempting to play it in, itself in the form of a 3-tuple indicating: (1) the *player ID of the phase* the card is to be placed on; (2) the *group within the phase the card* is to placed in; and (3) the *index of the position* within the group the card is to be played to.
+
+5. Discard a single (non-Skip) card from the player's hand, and in doing so, end the turn (e.g. `(5, 'JS')` indicates that a Jack of Spades is to be discarded).
+
+6. Discard a Skip card (`ZZ`) from the player's hand, and nominate Player N to be skipped (e.g. `(6, 2)` indicates that a Joker has been discarded ending the player's turn, and that Player 2 has been nominated to be skipped on their next turn).
+
+An example call to the function is:
+
+```powershell
+>>> print(phazed_bonus(2, [(None, []), (None, []), (None, []), (None, [])], [(0, [(2, 'JS'), (6, 1)])], [(False, False, False, False, False, False, False), (False, False, False, False, False, False, False), (False, False, False, False, False, False, False), (False, False, False, False, False, False, False)], ['5D', '3H', '0C', '2H', '2C', '7H', 'KS', 'AS', 'KH', 'JC'], 'ZZ'))
+(1, None)
+```
 
 
