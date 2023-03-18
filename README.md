@@ -1,6 +1,6 @@
 # phazed
 
-This is my submission for ***Assignment 2 of COMP10001 Foundations of Computing in Sem 1 2021***. The program involves an implementation of the game 'Phazed' which is a variant of Phase 10, which is in turn a variant of rummy.
+The program involves an implementation of the game 'Phazed' which is a variant of Phase 10, which is in turn a variant of rummy.
 
 ## Overview
 
@@ -187,4 +187,4 @@ An example call to the function is:
 (1, None)
 ```
 
-
+*** Note: This is my submission for *Assignment 2 of COMP10001 Foundations of Computing in Sem 1 2021*. ***
